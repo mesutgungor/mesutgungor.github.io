@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LC Waikiki - Rate Limit</title>
+    <style>
+        *,::after,::before{box-sizing:border-box}body{padding:0;margin:0;background-color:#fafafa;font-family:Arial,Helvetica,sans-serif}.d-inline-block{display:inline-block}.text-blue{color:#1745bd}.text-dark{color:rgba(0,0,0,.86)}.text-center{text-align:center}.text-right{text-align:right}.fnt-sz--10{font-size:10px}.fnt-sz--11{font-size:11px}.fnt-sz--12{font-size:12px}.fnt-sz--13{font-size:13px}.fnt-sz--14{font-size:14px}.fnt-sz--15{font-size:15px}.fnt-sz--16{font-size:16px}.fnt-sz--17{font-size:17px}.fnt-sz--18{font-size:18px}.fnt-sz--19{font-size:19px}.fnt-sz--20{font-size:20px}.fnt-w--100{font-weight:100}.fnt-w--200{font-weight:200}.fnt-w--300{font-weight:300}.fnt-w--400{font-weight:400}.fnt-w--500{font-weight:500}.fnt-w--600{font-weight:600}.fnt-w--700{font-weight:700}.fnt-w--800{font-weight:800}.fnt-w--900{font-weight:900}.margin__t--20{margin-top:20px}.margin__t--50{margin-top:50px}.row{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}.col-md-12,.col-md-4,.col-md-6,.col-xs-12{position:relative;width:100%;padding-right:15px;padding-left:15px}.container-fluid{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.header{height:100px;display:flex;align-items:center;position:relative;box-shadow:0 5px 10px rgba(0,0,0,.13)}.main{padding-top:100px;min-height:550px}.footer{background-color:#fff;padding:20px 0}.message-box{padding:20px 0}.message-box.message-box-inline{padding:10px 0 10px 40px}.message-box.message-box-inline p{margin:0}.message-header{font-size:30px;position:relative}.message-content{font-size:18px;position:relative}.message-header-description{font-size:15px}.language-icon{position:absolute;top:-5px;left:-40px}.footer ul.information-list{list-style:none;padding:0;margin:0}.footer ul.information-list li{border-left:solid 5px;padding:30px 20px 30px 50px}.footer ul.information-list li:first-child{border-color:#1745bd}.footer ul.information-list li:last-child{border-color:#658efa}.footer ul.information-list li h4,.footer ul.information-list li p{margin:0}.footer ul.information-list li .info-box{padding-bottom:20px}.footer ul.information-list li .info-box:last-child{padding-bottom:0}.info-box__content{position:relative}.info-box__content .language-icon{left:-40px}.rate-svg{width:60%}@media (min-width:992px){.container{max-width:960px}}@media (max-width:768px){.header{height:80px;text-align:center}.main{min-height:unset;padding:50px 0}.message-box{padding:20px 20px 20px 25px}.message-box.message-box-inline{padding:5px 0 5px 60px}.language-icon{transform:scale(.8);top:-3px;left:-40px}.message-header{font-size:26px}.message-content{font-size:16px}.xs-flex-reverse{flex-direction:column-reverse}.xs-text-center{text-align:center}}@media (min-width:768px){.col-md-6{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%}.col-md-5{-ms-flex:0 0 41.666667%;flex:0 0 41.666667%;max-width:41.666667%}.col-md-4{-ms-flex:0 0 33.333333%;flex:0 0 33.333333%;max-width:33.333333%}.col-md-3{flex:0 0 25%;max-width:25%}.offset-md-2{margin-left:16.666667%}.offset-md-3{margin-left:25%}}
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="222"
+                            viewBox="0 0 300 55">
+                            <defs>
+                                <style>
+                                    .a {
+                                        clip-path: url(#b);
+                                    }
+
+                                    .b {
+                                        fill: #1745bd;
+                                        fill-rule: evenodd;
+                                    }
+                                </style>
+                                <clipPath id="b">
+                                    <rect width="300" height="55" />
+                                </clipPath>
+                            </defs>
+                            <g id="a" class="a">
+                                <path class="b"
+                                    d="M64.928,10.082a13.823,13.823,0,0,1,.47,2.151L55.922,12.1a14.06,14.06,0,0,0-.874-1.748,5.8,5.8,0,0,0-.941-1.21c-1.68-1.613-4.1-2.487-7.326-2.487a9.438,9.438,0,0,0-7.8,3.5c-1.882,2.285-2.823,5.579-2.823,9.813s1.008,7.393,3.025,9.477A10.236,10.236,0,0,0,46.848,32.6c3.159,0,5.579-.874,7.259-2.689a7.364,7.364,0,0,0,2.016-3.63l9.208-.067a14.788,14.788,0,0,1-5.848,9.41q-4.94,3.831-12.5,3.831c-6.318,0-11.292-1.748-14.854-5.243-3.63-3.5-5.444-8.267-5.444-14.384,0-6.587,2.084-11.628,6.184-15.19C36.362,1.546,40.933,0,46.444,0c7.393,0,12.771,2.084,16.2,6.251a14.42,14.42,0,0,1,2.285,3.831M0,.941H9.948V29.977H26.213v8.6H0Zm271.946,0h9.813V38.513h-9.813Zm-36.967,0h9.813v15.19l11.9-15.19h11.561L254.2,17.879l15.594,20.635H257.36l-12.367-18.08-.134,18.08h-9.813V.941ZM220.8.941h9.813V38.513H220.8Zm-36.564,0h9.813v15.19l11.9-15.19H217.5L203.455,17.879l15.594,20.635H206.614l-12.367-18.08-.134,18.08H184.3V.941Zm-14.585,0h9.813V38.513h-9.813Zm-4.1,29.238c-.067-2.756-.134-5.646-.134-9.477V15.862C165.412,4.7,160.707,0,149.214,0a32.333,32.333,0,0,0-13.039,2.89l-2.42,9.074a29.3,29.3,0,0,1,14.316-4.772c5.78,0,8.469,2.016,8.469,8.133h-5.377c-4.1,0-8.872.336-12.636,2.218-3.7,1.815-6.385,5.108-6.385,10.754,0,7.192,6.452,11.225,13.107,11.225a14.037,14.037,0,0,0,9.679-3.966V28.3a4.079,4.079,0,0,1-.47.672A8.167,8.167,0,0,1,147.6,32.33c-3.5,0-6.184-1.411-6.184-4.638,0-5.78,6.52-6.52,10.889-6.52l5.041-.134.067,17.139.067.336h8.872c-.2-2.89-.739-5.512-.807-8.334M134.763.941,124.009,38.513H112.515l-7.73-28.969-7.73,28.969H86.5L74.674.941H84.42L92.15,28.7,99.341.941H110.3l7.6,27.759L125.286.941h9.477Z"
+                                    transform="translate(9 8)" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="main">
+
+        <div class="container">
+            <div class="row xs-flex-reverse">
+                <div class="col-md-6">
+                    <div class="message-box">
+                        <div class="message-header text-blue">
+                            ::CLOUDFLARE_ERROR_1000S_BOX::
+                        </div>
+                        <div class="message-header-description">
+                            Ray ID : ::RAY_ID::
+                        </div>
+                    </div>
+
+                    <div class="message-box message-box-inline">
+                        <div class="message-content text-dark">
+                            <span class="language-icon">
+                              
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="30" height="30" viewBox="0 0 30 30">
+                                    <defs>
+                                        <clipPath id="b">
+                                            <rect width="30" height="30" />
+                                        </clipPath>
+                                    </defs>
+                                    <g id="a" clip-path="url(#b)">
+                                        <g transform="translate(-10 -7)">
+                                            <g transform="translate(10 7)" fill="none" stroke="#707070"
+                                                stroke-width="1.5">
+                                                <circle cx="15" cy="15" r="15" stroke="none" />
+                                                <circle cx="15" cy="15" r="14.25" fill="none" />
+                                            </g>
+                                            <path
+                                                d="M6.449,0H1.276V-9.28H6.449v.958H2.355v2.99H6.2v.952H2.355V-.965H6.449Zm9.306,0H14.523L9.452-7.789H9.4q.1,1.371.1,2.514V0h-1V-9.28H9.725l5.059,7.757h.051q-.013-.171-.057-1.1t-.032-1.33V-9.28h1.009Z"
+                                                transform="translate(16 27)" fill="rgba(0,0,0,0.53)" />
+                                        </g>
+                                    </g>
+                                </svg>
+                              
+                            </span>
+                            <p>You are being rate limited.</p>
+                        </div>
+                    </div>
+
+                    <div class="message-box message-box-inline">
+                        <div class="message-content text-dark">
+                            <span class="language-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                width="30" height="30" viewBox="0 0 30 30">
+                                <defs>
+                                    <clipPath id="b">
+                                        <rect width="30" height="30" />
+                                    </clipPath>
+                                </defs>
+                                <g id="a" clip-path="url(#b)">
+                                    <g transform="translate(-169 -773)">
+                                        <g transform="translate(169 773)" fill="none" stroke="#707070"
+                                            stroke-width="1.5">
+                                            <circle cx="15" cy="15" r="15" stroke="none" />
+                                            <circle cx="15" cy="15" r="14.25" fill="none" />
+                                        </g>
+                                        <path
+                                            d="M-3.482,0H-4.561V-8.322H-7.5V-9.28H-.543v.958H-3.482ZM1.933-3.859V0H.854V-9.28H3.4a4.005,4.005,0,0,1,2.523.654,2.371,2.371,0,0,1,.816,1.968A2.465,2.465,0,0,1,4.872-4.17L7.392,0H6.116L3.869-3.859Zm0-.927H3.412A2.554,2.554,0,0,0,5.088-5.24,1.689,1.689,0,0,0,5.621-6.6a1.549,1.549,0,0,0-.543-1.327,2.94,2.94,0,0,0-1.742-.406h-1.4Z"
+                                            transform="translate(184 793)" fill="rgba(0,0,0,0.53)" />
+                                    </g>
+                                </g>
+                            </svg> 
+                            </span>
+                            <p>Oran kısıtlısınız.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-right xs-text-center">
+                    <svg class="rate-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 398 398"><defs><style>.cls-1{fill:#a3a3a3;}.cls-2{fill:none;}.cls-3{fill:#fd9191;}</style></defs><path class="cls-1" d="M76.09,188.11h28.2a100,100,0,0,1,198.2,0h28.19a128,128,0,0,0-254.59,0Z"/><g id="Ellipse_5" data-name="Ellipse 5"><circle class="cls-2" cx="199" cy="199" r="199"/><path class="cls-1" d="M199,398C89.27,398,0,308.73,0,199S89.27,0,199,0,398,89.27,398,199,308.73,398,199,398Zm0-364C108,34,34,108,34,199s74,165,165,165,165-74,165-165S290,34,199,34Z"/></g><path class="cls-3" d="M302.82,188.71l28.25.71A128.08,128.08,0,0,0,236.58,77.61l-.72,29A100.3,100.3,0,0,1,302.82,188.71Z"/><path class="cls-1" d="M263.73,163.07a12,12,0,0,0-16.66,3.2l-40,59c-.13.19-.24.38-.36.58A35.58,35.58,0,0,0,199,225c-19.88,0-36,16.34-36,36.5A36.28,36.28,0,0,0,197.15,298c.61,0,1.23.05,1.85.05s1.24,0,1.85-.05A36.25,36.25,0,0,0,235,263.33c0-.6.05-1.22.05-1.83s0-1.15,0-1.71A36.63,36.63,0,0,0,227,238.6l39.91-58.87A12,12,0,0,0,263.73,163.07ZM199.77,275a12.51,12.51,0,1,1,12-12.5A12.27,12.27,0,0,1,199.77,275Z"/></svg>
+            </div>
+        </div>
+    </div>
+ 
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <ul class="information-list">
+                        <li>
+                            <div class="info-box">
+                                <div class="info-box__content">
+                                    <span class="language-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"
+                                            viewBox="0 0 30 30">
+                                            <defs>
+                                                <clipPath id="b">
+                                                    <rect width="30" height="30" />
+                                                </clipPath>
+                                            </defs>
+                                            <g id="a" clip-path="url(#b)">
+                                                <g transform="translate(-10 -7)">
+                                                    <g transform="translate(10 7)" fill="none" stroke="#707070"
+                                                        stroke-width="1.5">
+                                                        <circle cx="15" cy="15" r="15" stroke="none" />
+                                                        <circle cx="15" cy="15" r="14.25" fill="none" />
+                                                    </g>
+                                                    <path
+                                                        d="M6.449,0H1.276V-9.28H6.449v.958H2.355v2.99H6.2v.952H2.355V-.965H6.449Zm9.306,0H14.523L9.452-7.789H9.4q.1,1.371.1,2.514V0h-1V-9.28H9.725l5.059,7.757h.051q-.013-.171-.057-1.1t-.032-1.33V-9.28h1.009Z"
+                                                        transform="translate(16 27)" fill="rgba(0,0,0,0.53)" />
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <h4 class="text-dark fnt-sz--16">What happened?</h4>
+                                    <p class="text-dark fnt-sz--14">The owner of this website(www.lcwaikiki.com) has banned you temporarily from accessing this website</p>
+                                </div>
+                            </div>
+                            <div class="info-box">
+                                <div class="info-box__content">
+                                    <span class="language-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"
+                                            viewBox="0 0 30 30">
+                                            <defs>
+                                                <clipPath id="b">
+                                                    <rect width="30" height="30" />
+                                                </clipPath>
+                                            </defs>
+                                            <g id="a" clip-path="url(#b)">
+                                                <g transform="translate(-169 -773)">
+                                                    <g transform="translate(169 773)" fill="none" stroke="#707070"
+                                                        stroke-width="1.5">
+                                                        <circle cx="15" cy="15" r="15" stroke="none" />
+                                                        <circle cx="15" cy="15" r="14.25" fill="none" />
+                                                    </g>
+                                                    <path
+                                                        d="M-3.482,0H-4.561V-8.322H-7.5V-9.28H-.543v.958H-3.482ZM1.933-3.859V0H.854V-9.28H3.4a4.005,4.005,0,0,1,2.523.654,2.371,2.371,0,0,1,.816,1.968A2.465,2.465,0,0,1,4.872-4.17L7.392,0H6.116L3.869-3.859Zm0-.927H3.412A2.554,2.554,0,0,0,5.088-5.24,1.689,1.689,0,0,0,5.621-6.6a1.549,1.549,0,0,0-.543-1.327,2.94,2.94,0,0,0-1.742-.406h-1.4Z"
+                                                        transform="translate(184 793)" fill="rgba(0,0,0,0.53)" />
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <h4 class="text-dark fnt-sz--16">Ne oldu?</h4>
+                                    <p class="text-dark fnt-sz--14">Bu web sitesinin sahibi (www.lcwaikiki.com) bu web sitesine erişmenizi geçici olarak yasakladı.</p>
+                                </div>
+                            </div>
+                        </li>
+                
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-center fnt-sz--13">
+                  <span class="d-inline-block">Your IP : ::CLIENT_IP::</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
